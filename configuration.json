@@ -8,9 +8,10 @@
   },
   "Database": {
     "Host": "localhost",
+    "PoolSize": 5,
     "Port": 3306,
     "User": "root",
-    "Password": "",
+    "Password": "123456",
     "Database": "transformice"
   },
   "Network": {

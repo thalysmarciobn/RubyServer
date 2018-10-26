@@ -1,6 +1,6 @@
 from ruby.network.buffer.BufferArray import BufferArray
 
-class Output():
 
+class Output:
     output = []
     bufferArray = BufferArray()

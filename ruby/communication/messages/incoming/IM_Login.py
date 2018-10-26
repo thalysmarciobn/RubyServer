@@ -2,9 +2,8 @@ from ruby.communication.messages.Incoming import Incoming
 from ruby.utils.Language import Language
 
 
-class IM_Langue(Incoming):
-    tokens = [8, 2]
+class IM_Login(Incoming):
+    tokens = [26, 8]
 
     def dispatch(self, Session, BufferArray):
-        langueCode = BufferArray.readByte()
-        Session.language = Language(langueCode)
+        pass

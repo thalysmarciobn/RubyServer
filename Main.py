@@ -1,15 +1,15 @@
 from ruby.Server import Server
-from ruby.utils import Logging
 from ruby import Controller
 
+
 def main():
-    Logging.info("Packets loaded: " + str(len(Controller.packet_manager)))
-
-
     config = Controller.configuration
+    if Controller.database.connect():
+        server = Server(config["Network"]["Address"], config["Network"]["Ports"], config["Network"]["Backlog"])
 
-    server = Server(config["Network"]["Address"], config["Network"]["Ports"], config["Network"]["Backlog"])
-    server.start()
+        print(Controller.database.execute("select * from users WHERE Username = %(username)s", {"username": "Thalys"}))
+        server.start()
+
 
 if __name__ == "__main__":
     main()

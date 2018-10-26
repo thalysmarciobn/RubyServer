@@ -1,28 +1,32 @@
 from ruby.network.buffer.BufferArray import BufferArray
 
 
-class Encoder():
+class Encoder:
 
-    def encoder(self, message):
+    @staticmethod
+    def encoder(message):
         if type(message) is str:
             return message.encode()
         else:
             Output = message
             bufferArray = Output.bufferArray
             packet = BufferArray()
-            length = bufferArray.length() + 2
-            if length <= 0xFF:
-                packet.writeByte(1)
-                packet.writeByte(length)
-            elif length <= 0xFFFF:
-                packet.writeByte(2)
-                packet.writeShort(length)
-            elif length <= 0xFFFFFF:
-                packet.writeByte(3);
-                packet.writeByte((length >> 18) & 0xFF);
-                packet.writeByte((length >> 8) & 0xFF);
-                packet.writeByte(length & 0xFF)
-            packet.writeByte(Output.output[0]);
-            packet.writeByte(Output.output[1]);
+            for token in Output.output:
+                packet.writeByte(token)
             packet.writeBytes(bufferArray.toByteArray())
-            return packet.toByteArray()
+
+            length = len(packet) + len(Output.output)
+            p2 = BufferArray()
+            if 0xFF >= length:
+                p2.writeByte(1)
+                p2.writeByte(length)
+            elif 0xFFFF >= length:
+                p2.writeByte(2)
+                p2.writeShort(length)
+            else:
+                p2.writeByte(3)
+                p2.writeByte(length >> 16)
+                p2.writeByte(length >> 8)
+                p2.writeByte(length >> 0)
+            p2.writeBytes(packet.toByteArray())
+            return p2.toByteArray()

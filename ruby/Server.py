@@ -4,7 +4,7 @@ from ruby.network.Network import Network
 from ruby.utils import Logging
 
 
-class Server():
+class Server:
 
     def __init__(self, host, ports, backlog):
         self.__host = host
@@ -16,7 +16,7 @@ class Server():
         Logging.info("Starting server.")
         for port in self.__ports:
             try:
-                Network(self.__host, port, self.__backlog, "thread-network-" + str(port))
+                Network(self.__host, port, self.__backlog)
                 self.__validPorts.append(port)
             except Exception as e:
                 Logging.alert("Can't bind on port: " + str(e))

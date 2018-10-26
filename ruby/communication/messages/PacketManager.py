@@ -1,23 +1,31 @@
 import inspect
+import os
+import pkgutil
 import sys
 
-from ruby.communication.messages import *
 from ruby.communication.messages import Incoming
 from ruby.utils import Logging
 
-class PacketManager():
+
+class PacketManager:
 
     def __init__(self):
         self.__packets = dict()
-        for name, obj in inspect.getmembers(sys.modules[__name__]):
-            if inspect.isclass(obj) and Incoming.Incoming in obj.mro():
-                self.__add__(obj)
-
-    def __len__(self):
-        return len(self.__packets)
+        IMPackage = "incoming"
+        IMPackagePath = os.path.join(os.path.dirname(__file__), IMPackage.replace(".", "\\"))
+        for _, name, __ in pkgutil.iter_modules([IMPackagePath]):
+            packageName = __package__ + "." + IMPackage + "." + name
+            exec("import " + packageName)
+            IMModules = sys.modules[packageName]
+            for module in dir(IMModules):
+                if not module.startswith("IM"): continue
+                moduleObj = getattr(IMModules, module)
+                if Incoming.Incoming in moduleObj.mro()[1:]:
+                    self.__add__(moduleObj())
+        Logging.info("Packets loaded: " + str(len(self.__packets)))
 
     def __add__(self, Incoming):
-        code = Incoming.tokens[1] + (Incoming.tokens[0] << 8);
+        code = Incoming.tokens[1] + (Incoming.tokens[0] << 8)
         if not self.__packets.__contains__(code):
             self.__packets[code] = Incoming
             Logging.packet("Registered", "packet: " + str(Incoming.tokens) + " with opcode: " + str(code))

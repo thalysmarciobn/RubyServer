@@ -1,5 +1,6 @@
 import struct
 
+
 class BufferArray:
     def __init__(self, data=b""):
         if type(data) == bytes:
@@ -10,6 +11,7 @@ class BufferArray:
             self.bytes = b""
 
     def write(self, data):
+        global bytes
         self.bytes += bytes(data, 'utf-8')
 
     def writeBool(self, data):
@@ -63,7 +65,7 @@ class BufferArray:
 
     def readLong(self):
         data = struct.unpack('!Q', self.bytes[:8])[0]
-        self.bytes = self.byte[8:]
+        self.bytes = self.bytes[8:]
         return data
 
     def readUTF(self):
@@ -75,7 +77,7 @@ class BufferArray:
     def toByteArray(self):
         return self.bytes
 
-    def length(self):
+    def __len__(self):
         return len(self.bytes)
 
     def bytesAvailable(self):

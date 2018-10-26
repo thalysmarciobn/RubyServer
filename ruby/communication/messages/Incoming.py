@@ -1,6 +1,7 @@
 from abc import abstractmethod
 
-class Incoming():
+
+class Incoming:
     tokens = []
 
     @abstractmethod
