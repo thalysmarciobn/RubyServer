@@ -13,6 +13,7 @@ class IM_Correct_Version(Incoming):
     def dispatch(self, Session, BufferArray):
         version = BufferArray.readShort()
         key = BufferArray.readUTF()
+        print(str(version))
         if version == int(Controller.configuration["Transformice"]["Version"]) and key == str(Controller.configuration["Transformice"]["ConnectionKey"]):
             Session.send(OP_Correct_Version(Session.authKey, Session.lastPacketID))
             Session.send(OP_Banner_Login())

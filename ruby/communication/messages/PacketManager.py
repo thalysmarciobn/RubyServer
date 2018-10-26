@@ -1,14 +1,22 @@
+import inspect
+import sys
+
+from ruby.communication.messages import *
+from ruby.communication.messages import Incoming
 from ruby.utils import Logging
 
 class PacketManager():
 
     def __init__(self):
         self.__packets = dict()
+        for name, obj in inspect.getmembers(sys.modules[__name__]):
+            if inspect.isclass(obj) and Incoming.Incoming in obj.mro():
+                self.__add__(obj)
 
     def __len__(self):
         return len(self.__packets)
 
-    def add(self, Incoming):
+    def __add__(self, Incoming):
         code = Incoming.tokens[1] + (Incoming.tokens[0] << 8);
         if not self.__packets.__contains__(code):
             self.__packets[code] = Incoming

@@ -17,6 +17,7 @@ class Session(asyncore.dispatcher_with_send):
         self.__disposed = False
         self.__client = None
         self.__encoder = Encoder()
+        self.langueCode = 0
         self.lastPacketID  = random.randrange(0, 99)
         self.authKey = random.randrange(0xFFFF)
 
@@ -56,8 +57,7 @@ class Session(asyncore.dispatcher_with_send):
             return True
 
     def send(self, data):
-        data = self.__encoder.encoder(data)
-        self.socket.send(data)
+        self.socket.send(self.__encoder.encoder(data))
 
     def disconnect(self):
         if not self.__disposed:
