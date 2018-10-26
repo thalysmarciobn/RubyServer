@@ -1,0 +1,21 @@
+{
+  "Transformice": {
+    "Banner": "",
+    "ConnectionKey": "MfZJVZlyhfGo",
+    "Version": 485,
+    "LoginKeys": [134217728,5487827,927779,2,8517792,8,10120016,1380764,9232501,1073741824,10564612],
+    "PacketKeys": [23,61,6,23,8,5,12,24,10,5,71,110,79,101,94,79,80,93,100,112]
+  },
+  "Database": {
+    "Host": "localhost",
+    "Port": 3306,
+    "User": "root",
+    "Password": "",
+    "Database": "transformice"
+  },
+  "Network": {
+    "Address": "127.0.0.1",
+    "Ports": [5555, 4112, 6112, 44444, 44440, 3724],
+    "Backlog": 100
+  }
+}
