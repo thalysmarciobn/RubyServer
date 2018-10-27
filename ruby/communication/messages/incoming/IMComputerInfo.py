@@ -1,8 +1,8 @@
 from ruby.communication.messages.Incoming import Incoming
 
 
-class IM_Computer_Info(Incoming):
+class IMComputerInfo(Incoming):
     tokens = [28, 17]
 
-    def dispatch(self, Session, BufferArray):
+    def dispatch(self, session, buffer_array):
         pass

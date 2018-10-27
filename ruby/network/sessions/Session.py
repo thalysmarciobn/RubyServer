@@ -10,13 +10,14 @@ from ruby.utils.Language import Language
 
 class Session(asyncore.dispatcher_with_send):
 
-    def __init__(self, socket):
+    def __init__(self, socket, address):
         super().__init__(socket)
         Controller.session_manager.append(self)
         self.__socket = socket
         self.__disposed = False
         self.__client = None
         self.__encoder = Encoder()
+        self.ipAddress = address[0]
         self.language = Language(0)
         self.lastPacketID = 0
         self.authKey = random.randrange(0xFFFF)
@@ -59,7 +60,7 @@ class Session(asyncore.dispatcher_with_send):
         if Controller.packet_manager.__contains__(opcodes):
             Controller.packet_manager.get(opcodes).dispatch(self, buffer)
         else:
-            Logging.alert("Packet not found: [" + str(code1) + ", " + str(code2) + "] with opcode: " + str(opcodes))
+            Logging.alert(f"Packet not found: [{code1}, {code2}] with opcode: {opcodes}")
 
     def writable(self):
         if not self.__disposed:

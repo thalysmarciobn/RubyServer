@@ -8,14 +8,14 @@ class Encoder:
         if type(message) is str:
             return message.encode()
         else:
-            Output = message
-            bufferArray = Output.bufferArray
+            output = message
+            buffer_array = output.bufferArray
             packet = BufferArray()
-            for token in Output.output:
+            for token in output.output:
                 packet.writeByte(token)
-            packet.writeBytes(bufferArray.toByteArray())
+            packet.writeBytes(buffer_array.toByteArray())
 
-            length = len(packet) + len(Output.output)
+            length = len(packet) + len(output.output)
             p2 = BufferArray()
             if 0xFF >= length:
                 p2.writeByte(1)

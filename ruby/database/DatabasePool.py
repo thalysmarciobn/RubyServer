@@ -2,7 +2,7 @@ import mysql.connector
 
 import mysql.connector.pooling
 
-from utils import Logging
+from ruby.utils import Logging
 
 
 class DatabasePool:
@@ -10,12 +10,13 @@ class DatabasePool:
     def __init__(self, config):
         self.__pool_name = config["Database"]
         self.__pool_size = config["PoolSize"]
-        self.__database = {"host": config["Host"],
-                           "port": config["Port"],
-                           "user": config["User"],
-                           "password": config["Password"],
-                           "database": config["Database"]
-                           }
+        self.__database = {
+            "host": config["Host"],
+            "port": config["Port"],
+            "user": config["User"],
+            "password": config["Password"],
+            "database": config["Database"]
+        }
         self.__pool = None
 
     def connect(self):
@@ -37,7 +38,7 @@ class DatabasePool:
             cursor.execute(sql, args)
         else:
             cursor.execute(sql)
-        if commit is True:
+        if commit:
             conn.commit()
             cursor.close()
             conn.close()
