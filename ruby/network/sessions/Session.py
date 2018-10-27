@@ -8,7 +8,7 @@ from ruby.utils import Logging
 from ruby.utils.Language import Language
 
 
-class Session(asyncore.dispatcher_with_send):
+class Session(asyncore.dispatcher):
 
     def __init__(self, socket):
         super().__init__(socket)
