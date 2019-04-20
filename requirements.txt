@@ -1,0 +1,3 @@
+schedule
+geoip2
+mysql-connector-python
