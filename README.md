@@ -1,1 +1,1 @@
-TransformiceServer
+Server
