@@ -27,8 +27,8 @@ class DatabasePool:
                 pool_reset_session=True,
                 **self.__database)
             return True
-        except:
-            Logging.warn("Can't connect to database")
+        except Exception as e:
+            Logging.warn(f"Can't connect to database, {e}")
             return False
 
     def execute(self, sql, args=None, commit=False):
