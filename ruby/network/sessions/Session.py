@@ -19,8 +19,6 @@ class Session(asyncore.dispatcher_with_send):
         self.__encoder = Encoder()
         self.ipAddress = address[0]
         self.language = Language(0)
-        self.lastPacketID = 0
-        self.authKey = random.randrange(0xFFFF)
 
     def handle_read(self):
         if self.__disposed:
@@ -32,7 +30,8 @@ class Session(asyncore.dispatcher_with_send):
             return
 
         length = len(out_buffer)
-        if length < 5:
+
+        if length < 2:
             return
         buffer = BufferArray(out_buffer)
 
