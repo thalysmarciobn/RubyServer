@@ -23,13 +23,13 @@ class PacketManager:
                     self.__add__(module_obj())
         Logging.info(f"Packets loaded: {len(self.__packets)}")
 
-    def __add__(self, Incoming):
-        code = Incoming.tokens[1] + (Incoming.tokens[0] << 8)
+    def __add__(self, incoming):
+        code = incoming.tokens[1] + (incoming.tokens[0] << 8)
         if not self.__packets.__contains__(code):
-            self.__packets[code] = Incoming
-            Logging.packet("Registered", f"packet: {Incoming.tokens} with opcode: {code}")
+            self.__packets[code] = incoming
+            Logging.packet("Registered", f"packet: {incoming.tokens} with opcode: {code}")
         else:
-            Logging.packet("Failed", f"can't register: {Incoming.tokens}")
+            Logging.packet("Failed", f"can't register: {incoming.tokens}")
 
     def __contains__(self, code):
         return self.__packets.__contains__(code)

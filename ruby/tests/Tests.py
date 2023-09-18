@@ -8,4 +8,3 @@ class Tests:
         encoder = Encoder()
         message = encoder.encoder(data)
         print(message)
-        pass

@@ -13,5 +13,5 @@ class Network(asyncore.dispatcher):
         self.bind((host, port))
         self.listen(backlog)
 
-    def handle_accepted(self, socket, address):
-        Session(socket, address)
+    def handle_accepted(self, client, address):
+        Session(client, address)
